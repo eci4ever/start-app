@@ -50,18 +50,6 @@ function App() {
             IC Marking
           </Link>
 
-          <div className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-            <a href="#features" className="transition hover:text-foreground">
-              Features
-            </a>
-            <a href="#workflow" className="transition hover:text-foreground">
-              Workflow
-            </a>
-            <a href="#preview" className="transition hover:text-foreground">
-              Preview
-            </a>
-          </div>
-
           <Button asChild size="sm">
             <Link to="/login">Login</Link>
           </Button>
@@ -132,60 +120,6 @@ function App() {
                 <CheckCircle2 className="mb-3 size-4 text-primary" />
                 <p className="text-sm font-medium">{item}</p>
                 <p className="mt-1 text-xs text-muted-foreground">Reviewed</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="features" className="border-y bg-background/70 px-6 py-16">
-        <div className="mx-auto max-w-6xl">
-          <div className="max-w-2xl">
-            <p className="text-sm font-medium text-muted-foreground">Features</p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-normal">
-              Everything needed for fair creative assessment.
-            </h2>
-          </div>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {features.map((feature) => (
-              <article key={feature.title} className="rounded-md border bg-card p-5 shadow-sm">
-                <feature.icon className="size-9 rounded-md border bg-background p-2" />
-                <h3 className="mt-5 text-lg font-semibold">{feature.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                  {feature.copy}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="workflow" className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-          <div>
-            <p className="text-sm font-medium text-muted-foreground">Workflow</p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-normal">
-              Set up, mark, moderate, publish.
-            </h2>
-            <p className="mt-4 leading-7 text-muted-foreground">
-              Keep the marking process predictable for administrators, evaluators,
-              and participants.
-            </p>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-3">
-            {[
-              ["1", "Create rubric", "Define criteria and score ranges."],
-              ["2", "Review work", "Markers assess submissions and add notes."],
-              ["3", "Publish results", "Moderate scores and share outcomes."],
-            ].map(([number, title, copy]) => (
-              <div key={title} className="rounded-md border bg-card p-5 shadow-sm">
-                <span className="flex size-8 items-center justify-center rounded-md bg-primary text-sm font-medium text-primary-foreground">
-                  {number}
-                </span>
-                <h3 className="mt-5 font-semibold">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy}</p>
               </div>
             ))}
           </div>
