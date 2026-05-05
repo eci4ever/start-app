@@ -27,7 +27,7 @@ function App() {
             <span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
               <Lightbulb className="size-4" />
             </span>
-            IC Marking
+            ADTEC JTM
           </Link>
 
           <Button asChild size="sm">

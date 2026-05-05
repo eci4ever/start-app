@@ -15,7 +15,7 @@ function RouteComponent() {
                     <div className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
                         <GalleryVerticalEnd className="size-4" />
                     </div>
-                    ADTEC JTM Inc.
+                    ADTEC JTM
                 </Link>
                 <SignupForm />
             </div>
