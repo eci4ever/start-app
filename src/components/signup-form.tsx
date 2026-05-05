@@ -14,9 +14,9 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { Link } from "@tanstack/react-router"
+import { Link } from "node_modules/@tanstack/react-router/dist/esm/link"
 
-export function LoginForm({
+export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
@@ -24,14 +24,18 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
+          <CardTitle className="text-xl">Create your account</CardTitle>
           <CardDescription>
-            Login with your account
+            Enter your email below to create your account
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form>
             <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="name">Full Name</FieldLabel>
+                <Input id="name" type="text" placeholder="John Doe" required />
+              </Field>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
@@ -42,15 +46,26 @@ export function LoginForm({
                 />
               </Field>
               <Field>
-                <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
-                </div>
-                <Input id="password" type="password" required />
+                <Field className="grid grid-cols-2 gap-4">
+                  <Field>
+                    <FieldLabel htmlFor="password">Password</FieldLabel>
+                    <Input id="password" type="password" required />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="confirm-password">
+                      Confirm Password
+                    </FieldLabel>
+                    <Input id="confirm-password" type="password" required />
+                  </Field>
+                </Field>
+                <FieldDescription>
+                  Must be at least 8 characters long.
+                </FieldDescription>
               </Field>
               <Field>
-                <Button type="submit">Login</Button>
+                <Button type="submit">Create Account</Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <Link to="/signup">Sign up</Link>
+                  Already have an account? <Link to="/login">Sign in</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>

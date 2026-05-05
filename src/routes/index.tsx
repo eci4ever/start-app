@@ -44,7 +44,7 @@ function App() {
           </div>
 
           <h1 className="max-w-3xl text-4xl font-semibold tracking-normal sm:text-5xl lg:text-6xl">
-            Innovation & Creativity Marking System
+            Innovation & Creativity
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">

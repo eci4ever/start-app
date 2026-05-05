@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { GalleryVerticalEnd } from "lucide-react"
-import { LoginForm } from "@/components/login-form"
+import { SignupForm } from "@/components/signup-form"
 
-export const Route = createFileRoute('/login')({
+
+export const Route = createFileRoute('/signup')({
     component: RouteComponent,
 })
 
@@ -16,7 +17,7 @@ function RouteComponent() {
                     </div>
                     ADTEC JTM Inc.
                 </Link>
-                <LoginForm />
+                <SignupForm />
             </div>
         </div>
     )
