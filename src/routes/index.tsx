@@ -106,7 +106,7 @@ function App() {
         </div>
       </section>
 
-      <section className="px-6 pb-16">
+      {/* <section className="px-6 pb-16">
         <div className="mx-auto flex max-w-6xl flex-col justify-between gap-5 rounded-md border bg-card p-6 shadow-sm sm:flex-row sm:items-center">
           <div>
             <h2 className="text-2xl font-semibold">Ready to begin?</h2>
@@ -121,7 +121,7 @@ function App() {
             </Link>
           </Button>
         </div>
-      </section>
+      </section> */}
     </main>
   )
 }
