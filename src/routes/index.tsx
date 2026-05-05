@@ -2,34 +2,14 @@ import { Link, createFileRoute } from "@tanstack/react-router"
 import {
   ArrowRight,
   CheckCircle2,
-  ClipboardCheck,
   Lightbulb,
-  MessageSquareText,
   ShieldCheck,
-  UsersRound,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
 export const Route = createFileRoute("/")({ component: App })
 
-const features = [
-  {
-    icon: ClipboardCheck,
-    title: "Clear rubrics",
-    copy: "Mark originality, feasibility, impact, and presentation with consistent scoring criteria.",
-  },
-  {
-    icon: UsersRound,
-    title: "Multiple markers",
-    copy: "Collect evaluator scores, compare differences, and moderate results before publishing.",
-  },
-  {
-    icon: MessageSquareText,
-    title: "Useful feedback",
-    copy: "Keep comments tied to each criterion so teams understand how to improve their ideas.",
-  },
-]
 
 const scores = [
   ["Originality", 92],
