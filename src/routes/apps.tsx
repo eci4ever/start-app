@@ -59,11 +59,7 @@ function AppsLayout() {
       <header className="border-b bg-background">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-5">
           <div>
-            <p className="text-sm text-muted-foreground">Signed in as</p>
-            <h1 className="mt-1 text-2xl font-semibold">{session.user.name}</h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {session.user.email}
-            </p>
+            {session.user.name} <span className="text-muted-foreground">| {session.user.email}</span>
           </div>
 
           <Button
