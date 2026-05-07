@@ -1,3 +1,4 @@
+import { useState, type ComponentProps } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -10,34 +11,71 @@ import {
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { Link } from "@tanstack/react-router"
+import { signIn } from "@/lib/auth-client"
+import { Link, useNavigate } from "@tanstack/react-router"
 
 export function LoginForm({
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: ComponentProps<"div">) {
+  const navigate = useNavigate()
+  const [error, setError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit: NonNullable<ComponentProps<"form">["onSubmit"]> = async (
+    event
+  ) => {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+    const email = String(formData.get("email") ?? "")
+    const password = String(formData.get("password") ?? "")
+
+    setError(null)
+    setIsSubmitting(true)
+
+    try {
+      const { error: signInError } = await signIn.email({
+        email,
+        password,
+      })
+
+      if (signInError) {
+        setError(signInError.message || "Unable to login.")
+        return
+      }
+
+      await navigate({ to: "/apps" })
+    } catch {
+      setError("Unable to login.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>
-            Login with your account
-          </CardDescription>
+          <CardDescription>Login with your account</CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="m@example.com"
+                  disabled={isSubmitting}
                   required
                 />
               </Field>
@@ -45,10 +83,19 @@ export function LoginForm({
                 <div className="flex items-center">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  disabled={isSubmitting}
+                  required
+                />
               </Field>
+              {error ? <FieldError>{error}</FieldError> : null}
               <Field>
-                <Button type="submit">Login</Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Logging in..." : "Login"}
+                </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account? <Link to="/signup">Sign up</Link>
                 </FieldDescription>
