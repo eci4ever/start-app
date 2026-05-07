@@ -12,8 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as BookRouteImport } from './routes/book'
+import { Route as AppsRouteImport } from './routes/apps'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppsIndexRouteImport } from './routes/apps/index'
+import { Route as AppsTestRouteImport } from './routes/apps/test'
+import { Route as AppsAdminIndexRouteImport } from './routes/apps/admin/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const SignupRoute = SignupRouteImport.update({
@@ -31,15 +34,30 @@ const BookRoute = BookRouteImport.update({
   path: '/book',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppsRoute = AppsRouteImport.update({
+  id: '/apps',
+  path: '/apps',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsIndexRoute = AppsIndexRouteImport.update({
-  id: '/apps/',
-  path: '/apps/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppsRoute,
+} as any)
+const AppsTestRoute = AppsTestRouteImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => AppsRoute,
+} as any)
+const AppsAdminIndexRoute = AppsAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AppsRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
@@ -49,50 +67,78 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/apps': typeof AppsRouteWithChildren
   '/book': typeof BookRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/apps/test': typeof AppsTestRoute
   '/apps/': typeof AppsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/apps/admin/': typeof AppsAdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/book': typeof BookRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/apps/test': typeof AppsTestRoute
   '/apps': typeof AppsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/apps/admin': typeof AppsAdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/apps': typeof AppsRouteWithChildren
   '/book': typeof BookRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/apps/test': typeof AppsTestRoute
   '/apps/': typeof AppsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/apps/admin/': typeof AppsAdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/book' | '/login' | '/signup' | '/apps/' | '/api/auth/$'
+  fullPaths:
+    | '/'
+    | '/apps'
+    | '/book'
+    | '/login'
+    | '/signup'
+    | '/apps/test'
+    | '/apps/'
+    | '/api/auth/$'
+    | '/apps/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/book' | '/login' | '/signup' | '/apps' | '/api/auth/$'
-  id:
-    | '__root__'
+  to:
     | '/'
     | '/book'
     | '/login'
     | '/signup'
+    | '/apps/test'
+    | '/apps'
+    | '/api/auth/$'
+    | '/apps/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/apps'
+    | '/book'
+    | '/login'
+    | '/signup'
+    | '/apps/test'
     | '/apps/'
     | '/api/auth/$'
+    | '/apps/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppsRoute: typeof AppsRouteWithChildren
   BookRoute: typeof BookRoute
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
-  AppsIndexRoute: typeof AppsIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -119,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apps': {
+      id: '/apps'
+      path: '/apps'
+      fullPath: '/apps'
+      preLoaderRoute: typeof AppsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -128,10 +181,24 @@ declare module '@tanstack/react-router' {
     }
     '/apps/': {
       id: '/apps/'
-      path: '/apps'
+      path: '/'
       fullPath: '/apps/'
       preLoaderRoute: typeof AppsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppsRoute
+    }
+    '/apps/test': {
+      id: '/apps/test'
+      path: '/test'
+      fullPath: '/apps/test'
+      preLoaderRoute: typeof AppsTestRouteImport
+      parentRoute: typeof AppsRoute
+    }
+    '/apps/admin/': {
+      id: '/apps/admin/'
+      path: '/admin'
+      fullPath: '/apps/admin/'
+      preLoaderRoute: typeof AppsAdminIndexRouteImport
+      parentRoute: typeof AppsRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -143,12 +210,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppsRouteChildren {
+  AppsTestRoute: typeof AppsTestRoute
+  AppsIndexRoute: typeof AppsIndexRoute
+  AppsAdminIndexRoute: typeof AppsAdminIndexRoute
+}
+
+const AppsRouteChildren: AppsRouteChildren = {
+  AppsTestRoute: AppsTestRoute,
+  AppsIndexRoute: AppsIndexRoute,
+  AppsAdminIndexRoute: AppsAdminIndexRoute,
+}
+
+const AppsRouteWithChildren = AppsRoute._addFileChildren(AppsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppsRoute: AppsRouteWithChildren,
   BookRoute: BookRoute,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
-  AppsIndexRoute: AppsIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
