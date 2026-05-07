@@ -9,7 +9,22 @@ import { getRequestHeaders } from "@tanstack/react-start/server"
 import { LogOut } from "lucide-react"
 import { useState } from "react"
 
+import { AppSidebar } from "@/components/app-sidebar"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 import { signOut } from "@/lib/auth-client"
 
 const getCurrentSession = createServerFn({ method: "GET" }).handler(
@@ -55,28 +70,42 @@ function AppsLayout() {
   }
 
   return (
-    <main className="min-h-svh bg-muted text-foreground">
-      <header className="border-b bg-background">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-5">
-          <div>
-            {session.user.name} <span className="text-muted-foreground">| {session.user.email}</span>
+    <SidebarProvider>
+      <AppSidebar session={session} />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-[orientation=vertical]:h-6"
+            />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">
+                    Build Your Application
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleLogout}
+              disabled={isSigningOut}
+            >
+              <LogOut className="size-4" />
+              {isSigningOut ? "Logging out..." : "Logout"}
+            </Button>
           </div>
-
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleLogout}
-            disabled={isSigningOut}
-          >
-            <LogOut className="size-4" />
-            {isSigningOut ? "Logging out..." : "Logout"}
-          </Button>
-        </div>
-      </header>
-
-      <div className="mx-auto max-w-5xl px-6 py-8">
+        </header>
         <Outlet />
-      </div>
-    </main>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }
