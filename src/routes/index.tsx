@@ -2,7 +2,8 @@ import { Link, createFileRoute } from "@tanstack/react-router"
 import {
   ArrowRight,
   CheckCircle2,
-  Lightbulb,
+  ClipboardCheck,
+  GraduationCap,
   ShieldCheck,
 } from "lucide-react"
 
@@ -12,10 +13,10 @@ export const Route = createFileRoute("/")({ component: App })
 
 
 const scores = [
-  ["Originality", 92],
-  ["Feasibility", 84],
-  ["Impact", 89],
-  ["Presentation", 78],
+  ["Answer Accuracy", 92],
+  ["Rubric Criteria", 84],
+  ["Feedback Quality", 89],
+  ["Review Status", 78],
 ]
 
 function App() {
@@ -25,9 +26,9 @@ function App() {
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <Link to="/" className="flex items-center gap-2 font-semibold">
             <span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <Lightbulb className="size-4" />
+              <GraduationCap className="size-4" />
             </span>
-            ADTEC JTM
+            Examination Marking System
           </Link>
 
           <Button asChild size="sm">
@@ -40,27 +41,28 @@ function App() {
         <div>
           <div className="mb-5 inline-flex items-center gap-2 rounded-md border bg-muted px-3 py-1.5 text-sm text-muted-foreground">
             <ShieldCheck className="size-4" />
-            Simple marking for creative projects
+            Structured marking for student examinations
           </div>
 
           <h1 className="max-w-3xl text-4xl font-semibold tracking-normal sm:text-5xl lg:text-6xl">
-            Innovation & Creativity
+            Student Examination Marking System
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-            A clean platform for evaluating ideas with structured rubrics,
-            marker moderation, and feedback that students can act on.
+            A simple platform for managing examination marking with clear
+            rubrics, authenticated access, admin control, and consistent student
+            assessment records.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg">
               <Link to="/login">
-                Start marking
+                Login to mark
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <a href="#features">See features</a>
+              <Link to="/signup">Create account</Link>
             </Button>
           </div>
         </div>
@@ -68,8 +70,8 @@ function App() {
         <div id="preview" className="rounded-md border bg-card p-5 shadow-sm">
           <div className="flex items-start justify-between gap-4 border-b pb-5">
             <div>
-              <p className="text-sm text-muted-foreground">Current submission</p>
-              <h2 className="mt-1 text-xl font-semibold">Smart Campus Energy Hub</h2>
+              <p className="text-sm text-muted-foreground">Current paper</p>
+              <h2 className="mt-1 text-xl font-semibold">Final Examination</h2>
             </div>
             <div className="rounded-md bg-muted px-3 py-2 text-right">
               <p className="text-xs text-muted-foreground">Score</p>
@@ -95,9 +97,13 @@ function App() {
           </div>
 
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
-            {["Idea", "Prototype", "Pitch"].map((item) => (
+            {["Answers", "Rubric", "Feedback"].map((item) => (
               <div key={item} className="rounded-md border bg-background p-3">
-                <CheckCircle2 className="mb-3 size-4 text-primary" />
+                {item === "Rubric" ? (
+                  <ClipboardCheck className="mb-3 size-4 text-primary" />
+                ) : (
+                  <CheckCircle2 className="mb-3 size-4 text-primary" />
+                )}
                 <p className="text-sm font-medium">{item}</p>
                 <p className="mt-1 text-xs text-muted-foreground">Reviewed</p>
               </div>
